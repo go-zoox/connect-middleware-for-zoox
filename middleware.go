@@ -3,6 +3,7 @@ package connect
 import (
 	"net/http"
 
+	user "github.com/go-zoox/connect/user"
 	"github.com/go-zoox/jwt"
 	"github.com/go-zoox/zoox"
 )
@@ -27,7 +28,7 @@ func Create(secretKey string, opts ...*CreateOptions) zoox.Middleware {
 
 		token := ctx.Get("x-connect-token")
 		if token != "" {
-			user := &User{}
+			user := &user.User{}
 			if err := user.Decode(signer, token); err != nil {
 				if ctx.AcceptJSON() {
 					ctx.JSON(http.StatusUnauthorized, zoox.H{

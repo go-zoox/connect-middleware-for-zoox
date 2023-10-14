@@ -7,6 +7,7 @@ import (
 	"github.com/go-zoox/zoox"
 )
 
+// GetUser get user from context.
 func GetUser(ctx *zoox.Context) (u *user.User, err error) {
 	v := ctx.User().Get()
 	if v == nil {
