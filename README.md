@@ -19,37 +19,42 @@ go get github.com/go-zoox/connect-middleware-for-zoox
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/go-zoox/connect-middleware-for-zoox"
+	"github.com/go-zoox/logger"
+	"github.com/go-zoox/zoox"
+	"github.com/go-zoox/zoox/defaults"
 )
 
 func main() {
-	r := gin.Default()
-	
+	r := defaults.Default()
+
 	r.Use(connect.Create("YOUR_SECRET_KEY"))
 
-	r.GET("/user", func(c *gin.Context) {
+	r.Get("/user", func(c *zoox.Context) {
 		user, err := connect.GetUser(c)
 		if err != nil {
-			c.JSON(401, gin.H{
+			c.JSON(401, zoox.H{
 				"message": "unauthorized",
 			})
 			return
 		}
 
-		c.JSON(200, gin.H{
+		c.JSON(200, zoox.H{
 			"user": user,
 		})
 	})
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
+	r.Get("/", func(c *zoox.Context) {
+		c.JSON(200, zoox.H{
 			"message": "helloworld",
 		})
 	})
 
-	r.Run() // 监听并在 0.0.0.0:8080 上启动服务
+	if err := r.Run(); err != nil {
+		logger.Fatal("error running server: %s", err)
+	}
 }
+
 ```
 
 ## Related Projects

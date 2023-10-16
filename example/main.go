@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/go-zoox/connect-middleware-for-zoox"
 	"github.com/go-zoox/logger"
 	"github.com/go-zoox/zoox"
@@ -16,19 +15,19 @@ func main() {
 	r.Get("/user", func(c *zoox.Context) {
 		user, err := connect.GetUser(c)
 		if err != nil {
-			c.JSON(401, gin.H{
+			c.JSON(401, zoox.H{
 				"message": "unauthorized",
 			})
 			return
 		}
 
-		c.JSON(200, gin.H{
+		c.JSON(200, zoox.H{
 			"user": user,
 		})
 	})
 
 	r.Get("/", func(c *zoox.Context) {
-		c.JSON(200, gin.H{
+		c.JSON(200, zoox.H{
 			"message": "helloworld",
 		})
 	})
