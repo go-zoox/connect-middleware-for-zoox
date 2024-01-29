@@ -26,7 +26,7 @@ func Create(secretKey string, opts ...*CreateOptions) zoox.Middleware {
 			signer = jwt.New(secretKey)
 		}
 
-		token := ctx.Get("x-connect-token")
+		token := ctx.Header().Get("x-connect-token")
 		if token != "" {
 			user := &user.User{}
 			if err := user.Decode(signer, token); err != nil {
