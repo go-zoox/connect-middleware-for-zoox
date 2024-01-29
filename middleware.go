@@ -23,7 +23,7 @@ func Create(secretKey string, opts ...*CreateOptions) zoox.Middleware {
 
 	return func(ctx *zoox.Context) {
 		if signer == nil {
-			signer = jwt.New(ctx.App.Config.SecretKey)
+			signer = jwt.New(secretKey)
 		}
 
 		token := ctx.Get("x-connect-token")
